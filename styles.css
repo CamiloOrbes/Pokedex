@@ -1,0 +1,56 @@
+.head{
+    display: flex;
+    justify-content: center;
+    background-color: rgb(228, 39, 14);
+    margin: 0 420;
+    padding: 20px;
+}
+.buttonsearch{
+    display: flex;
+    justify-content: center;
+    background-color: rgb(228, 39, 14);
+    margin: 0 420;
+    padding: 20px;
+    
+}
+.container{
+    display:flex;
+    justify-content:center;
+    flex-wrap: wrap;  
+  }
+  
+  .user{
+
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+    vertical-align: top;
+    display:flex;
+    justify-content:center;
+    margin-right: 15px;
+    padding: 5px 5px;
+  }
+  
+  .user-pic{
+    display:flex;
+    width: 250px;
+    height:120px;
+    object-fit: cover;
+    margin-bottom: 12px;
+    justify-content: center;
+  }
+  
+.user-name 
+.user-email{
+    font-size: 18px;
+    font-weight: bold;
+    margin-left: 8px;
+    margin-bottom: 5px;
+}
+.user-evolution{
+    margin: auto;
+    margin-top: 10 px;
+    padding: 10px;
+    font-size: 18px;
+    display:flex;
+    justify-content:center;
+    align-items: center;
+}
