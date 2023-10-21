@@ -41,6 +41,16 @@ async function procesarEvolucion(respSpecies) {
     const evolutionUrl = datosSpe.evolution_chain.url;
     return evolutionUrl
 }
+async function procesarDescrip(respSpeciess) {
+    const respApi = await respSpeciess;
+    const datosSpe = await respApi.data;
+    for (const entry of datosSpe.flavor_text_entries) {
+        if (entry.language.name === "en") {
+          return entry.flavor_text;
+        }
+    }
+    return "Descripción en inglés no encontrada";
+}
 
 async function extraerEvoluciones(respEvo) {
     const respApi = await respEvo;
@@ -55,7 +65,7 @@ async function extraerEvoluciones(respEvo) {
     return pokeEvos
 }
 
-function display(imgUrl,pokeAbility,searchTerm,pokeMove, resultadosContainer){
+function display(imgUrl,pokeAbility,searchTerm,pokeMove, pokeDescrip,resultadosContainer){
     const contenedor = document.createElement('div');
     const userImg = document.createElement('div');
     userImg.setAttribute('class', 'user-pic');
@@ -67,15 +77,18 @@ function display(imgUrl,pokeAbility,searchTerm,pokeMove, resultadosContainer){
     const userName = document.createElement('div');
     userName.setAttribute('class', 'user-name');
     const nombrePokemon = document.createElement('p');
-    nombrePokemon.innerHTML = `<strong>Name: </strong>${searchTerm}`;
+    nombrePokemon.innerHTML = `<strong>Name: </strong>${searchTerm.toUpperCase()}`;
     const habilidadPokemon = document.createElement('p');
     habilidadPokemon.innerHTML = `<strong>Abilities: </strong>${pokeAbility[0]}, ${pokeAbility[1]}`;
     const movimientoPokemon = document.createElement('p');
     movimientoPokemon.innerHTML = `<strong>Moves: </strong>${pokeMove[0]}`;
+    const pokeDescription = document.createElement('p');
+    pokeDescription.innerHTML = `<strong>Descript: </strong>${pokeDescrip}`;
     userName.appendChild(nombrePokemon);
     userImg.appendChild(img);
     userName.appendChild(habilidadPokemon);
     userName.appendChild(movimientoPokemon);
+    userName.appendChild(pokeDescription);
     user.appendChild(userImg);
     user.appendChild(userName);
     contenedor.appendChild(user);
@@ -96,10 +109,10 @@ document.addEventListener('DOMContentLoaded', function() {
         if (evolutionButton) {
             evolutionButton.remove();
         }
-        searchInput.value = ''; // Restablecer el valor del campo de búsqueda
+        searchInput.value = ''; 
     }
 
-    // Agregar un manejador de clic para el botón de reinicio
+
     searchButton.addEventListener('click', async function() {
         
         var searchTerm = searchInput.value.toLowerCase();
@@ -112,6 +125,7 @@ document.addEventListener('DOMContentLoaded', function() {
         var urlSpecies = `https://pokeapi.co/api/v2/pokemon-species/${pokeId}/`;
         var respuestaPeticionSpecies = await consumeApiWithAxios(urlSpecies);
         var respuestaSpecies = await procesarEvolucion(respuestaPeticionSpecies);
+        var pokeDescrip = await procesarDescrip(respuestaPeticionSpecies);
         var respuestaPeticionEvo = await consumeApiWithAxios(respuestaSpecies);
         var pokeEvos = await extraerEvoluciones(respuestaPeticionEvo);
         var condicion = (valor) => valor === searchTerm;
@@ -122,16 +136,16 @@ document.addEventListener('DOMContentLoaded', function() {
             resultadosContainer.removeChild(resultadosContainer.firstChild);
         }
 
-        display(imgUrl,pokeAbility,searchTerm,pokeMove,resultadosContainer);
+        display(imgUrl,pokeAbility,searchTerm,pokeMove,pokeDescrip,resultadosContainer);
         if (evolutionButton) {
-            evolutionButton.remove(); // Eliminar el botón anterior si existe
+            evolutionButton.remove(); 
         }
         if (lenEvos>posicion) {
             console.log(lenEvos);
             console.log(posicion);
             evolutionButton = document.createElement('button');
             evolutionButton.setAttribute('class', 'user-evolution');
-            evolutionButton.innerText = 'Evolucionar'; // Texto del botón
+            evolutionButton.innerText = 'Evolucionar'; 
             evolutionButton.addEventListener('click', async function() {
                 posicion = posicion + 1 ;
                 searchTerm = pokeEvos[posicion];
@@ -144,6 +158,7 @@ document.addEventListener('DOMContentLoaded', function() {
                  urlSpecies = `https://pokeapi.co/api/v2/pokemon-species/${pokeId}/`;
                  respuestaPeticionSpecies = await consumeApiWithAxios(urlSpecies);
                  respuestaSpecies = await procesarEvolucion(respuestaPeticionSpecies);
+                 pokeDescrip = await procesarDescrip(respuestaPeticionSpecies);
                  respuestaPeticionEvo = await consumeApiWithAxios(respuestaSpecies);
                  pokeEvos = await extraerEvoluciones(respuestaPeticionEvo);
                  condicion = (valor) => valor === searchTerm;
@@ -152,7 +167,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (resultadosContainer.firstChild) {
                     resultadosContainer.removeChild(resultadosContainer.firstChild);
                 }
-                display(imgUrl,pokeAbility,searchTerm,pokeMove,resultadosContainer);
+                display(imgUrl,pokeAbility,searchTerm,pokeMove,pokeDescrip,resultadosContainer);
                 if (lenEvos<=posicion) {
                     if (evolutionButton) {
                         evolutionButton.remove(); 

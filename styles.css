@@ -1,56 +1,67 @@
-.head{
-    display: flex;
-    justify-content: center;
-    background-color: rgb(228, 39, 14);
-    margin: 0 420;
-    padding: 20px;
+body {
+  margin: 150px;
+  border: 10px solid #000; 
+  padding: 10px;
+  box-sizing: border-box;
 }
-.buttonsearch{
-    display: flex;
-    justify-content: center;
-    background-color: rgb(228, 39, 14);
-    margin: 0 420;
-    padding: 20px;
-    
+.head {
+  display: flex;
+  justify-content: center;
+  background-color: rgb(228, 39, 14); 
+  padding: 20px;
 }
-.container{
-    display:flex;
-    justify-content:center;
-    flex-wrap: wrap;  
-  }
-  
-  .user{
+.buttonsearch {
+  display: flex;
+  justify-content: center;
+  background-color: rgb(7, 4, 4);
+  margin-top: 20px;
+  padding: 20px;
+}
+.container {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
 
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
-    vertical-align: top;
-    display:flex;
-    justify-content:center;
-    margin-right: 15px;
-    padding: 5px 5px;
-  }
-  
-  .user-pic{
-    display:flex;
-    width: 250px;
-    height:120px;
-    object-fit: cover;
-    margin-bottom: 12px;
-    justify-content: center;
-  }
-  
-.user-name 
-.user-email{
-    font-size: 18px;
-    font-weight: bold;
-    margin-left: 8px;
-    margin-bottom: 5px;
+.user {
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+  vertical-align: top;
+  display: flex;
+  justify-content: center;
+  padding: 5px 5px;
 }
-.user-evolution{
-    margin: auto;
-    margin-top: 10 px;
-    padding: 10px;
-    font-size: 18px;
-    display:flex;
-    justify-content:center;
-    align-items: center;
+
+.user-pic {
+  display: flex;
+  width: 250px;
+  height: 120px;
+  object-fit: cover;
+  margin-bottom: 12px;
+  justify-content: center;
+}
+
+.user-name,
+.user-email {
+  font-size: 18px;
+  font-weight: bold;
+  margin-left: 8px;
+  margin-bottom: 5px;
+}
+
+.user-evolution {
+  margin: auto;
+  margin-top: 10px;
+  padding: 10px;
+  font-size: 18px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.footer {
+  display: flex;
+  justify-content: center;
+  background-color: rgb(203, 228, 14);
+  margin-top: 120px;
+  padding: 10px;
 }
