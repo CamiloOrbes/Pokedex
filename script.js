@@ -88,8 +88,20 @@ document.addEventListener('DOMContentLoaded', function() {
     const resultadosContainer = document.createElement('div'); 
     resultadosContainer.setAttribute('class', 'result-container');
     main.appendChild(resultadosContainer); 
-    let evolutionButton;
+    var evolutionButton;
+    function resetState() {
+        if (resultadosContainer.firstChild) {
+            resultadosContainer.removeChild(resultadosContainer.firstChild);
+        }
+        if (evolutionButton) {
+            evolutionButton.remove();
+        }
+        searchInput.value = ''; // Restablecer el valor del campo de búsqueda
+    }
+
+    // Agregar un manejador de clic para el botón de reinicio
     searchButton.addEventListener('click', async function() {
+        
         var searchTerm = searchInput.value.toLowerCase();
         var url = `https://pokeapi.co/api/v2/pokemon/${searchTerm}`;
         var respuestaPeticion = await consumeApiWithAxios(url);
@@ -117,7 +129,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (lenEvos>posicion) {
             console.log(lenEvos);
             console.log(posicion);
-            const evolutionButton = document.createElement('button');
+            evolutionButton = document.createElement('button');
             evolutionButton.setAttribute('class', 'user-evolution');
             evolutionButton.innerText = 'Evolucionar'; // Texto del botón
             evolutionButton.addEventListener('click', async function() {
@@ -143,12 +155,21 @@ document.addEventListener('DOMContentLoaded', function() {
                 display(imgUrl,pokeAbility,searchTerm,pokeMove,resultadosContainer);
                 if (lenEvos<=posicion) {
                     if (evolutionButton) {
-                        evolutionButton.remove(); // Eliminar el botón anterior si existe
+                        evolutionButton.remove(); 
                     }
                 }
 
             });
             main.appendChild(evolutionButton);
+            
         }
+        const resetButton = document.createElement('button');
+        resetButton.innerText = 'Restablecer';
+        resetButton.addEventListener('click', resetState);
+        resetButton.style.position = 'fixed';
+        resetButton.style.top = '10px';
+        resetButton.style.right = '10px';
+        document.body.appendChild(resetButton);
     });
+    
 });
